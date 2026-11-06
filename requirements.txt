@@ -1,0 +1,23 @@
+# Clipzy GPU Processing Worker - Python dependencies
+#
+# The pipeline core matches the original workflow's dependency set
+# (opencv-python-headless, numpy, requests, yt-dlp[default]) plus the
+# server/worker infrastructure. GPU extras (faster-whisper, torch) are
+# OPTIONAL and intentionally not installed by default: the canonical pipeline
+# transcribes through OpenRouter and renders with FFmpeg (NVENC when the GPU
+# is present), so the base image stays small.
+aiohttp>=3.9,<4
+boto3>=1.34
+opencv-python-headless>=4.9
+numpy>=1.26
+requests>=2.31
+yt-dlp[default]>=2024.10.22
+python-dotenv>=1.0
+
+# --- Vast.ai PyWorker framework (serverless) -------------------------------
+# The template can also install this at startup; baking it in is faster.
+vastai-sdk>=0.1.0
+
+# --- Optional GPU transcription (enable with CLIPZY_LOCAL_WHISPER=1) -------
+# faster-whisper>=1.0
+# torch  # only needed for torch-based GPU detection when nvidia-smi is absent
